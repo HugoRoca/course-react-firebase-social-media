@@ -3,12 +3,42 @@ const admin = require("firebase-admin");
 const app = require("express")();
 const firebase = require("firebase");
 const { config } = require("./key");
-const { object } = require("firebase-functions/lib/providers/storage");
 
 admin.initializeApp();
 firebase.initializeApp(config);
 
 const db = admin.firestore();
+const FBAuth = (req, res, next) => {
+  let idToken;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer ")
+  ) {
+    idToken = req.headers.authorization.split("Bearer ")[1];
+  } else {
+    return res.status(403).json({ error: "Unauthorized" });
+  }
+
+  admin
+    .auth()
+    .verifyIdToken(idToken)
+    .then((decodedToken) => {
+      req.user = decodedToken;
+      return db
+        .collection("users")
+        .where("user", "==", req.user.uid)
+        .limit(1)
+        .get();
+    })
+    .then((data) => {
+      req.user.handle = data.docs[0].data().handle;
+      return next();
+    })
+    .catch((err) => {
+      console.error("Error while verifying token", err);
+      return res.status(403).json(err);
+    });
+};
 
 app.get("/screams", (req, res) => {
   db.collection("screams")
@@ -29,10 +59,10 @@ app.get("/screams", (req, res) => {
     .catch((err) => console.error(err));
 });
 
-app.post("/scream", (req, res) => {
+app.post("/scream", FBAuth, (req, res) => {
   const newScream = {
     body: req.body.body,
-    userHandle: req.body.userHandle,
+    userHandle: req.user.handle,
     createdAt: new Date().toISOString(),
   };
 
@@ -121,6 +151,38 @@ app.post("/signup", (req, res) => {
             }
           });
       }
+    });
+});
+
+app.post("/login", (req, res) => {
+  const user = {
+    email: req.body.email,
+    password: req.body.password,
+  };
+
+  let errors = {};
+
+  if (isEmpty(user.email)) errors.email = "Must not be empty";
+  if (isEmpty(user.password)) errors.password = "Must not be empty";
+  if (Object.keys(errors).length > 0) return res.status(400).json(errors);
+
+  firebase
+    .auth()
+    .signInWithEmailAndPassword(user.email, user.password)
+    .then((data) => {
+      return data.user.getIdToken();
+    })
+    .then((token) => {
+      return res.json({ token });
+    })
+    .catch((err) => {
+      console.error(err);
+      if (err.code === "auth/wrong-password") {
+        return res
+          .status(403)
+          .json({ general: "Wrong credentials, please try again" });
+      }
+      return res.status(500).json({ error: err.code });
     });
 });
 
