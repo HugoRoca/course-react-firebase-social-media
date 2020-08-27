@@ -1,4 +1,4 @@
-const { admin } = require("../utils/admin");
+const { admin, db } = require("../utils/admin");
 
 module.exports = (req, res, next) => {
   let idToken;
@@ -18,7 +18,7 @@ module.exports = (req, res, next) => {
       req.user = decodedToken;
       return db
         .collection("users")
-        .where("user", "==", req.user.uid)
+        .where("userId", "==", req.user.uid)
         .limit(1)
         .get();
     })

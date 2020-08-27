@@ -12,10 +12,4 @@ app.post("/scream", FBAuth, postOneScream);
 app.post("/signup", signup);
 app.post("/login", login);
 
-// Signup route
-let token, userId;
-
-
-
-
 exports.api = functions.https.onRequest(app);
