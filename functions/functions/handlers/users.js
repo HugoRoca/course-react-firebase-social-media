@@ -4,6 +4,7 @@ const { config } = require("../key");
 const {
   validateSignupData,
   validateLoginData,
+  reduceUserDetails,
 } = require("../utils/validators");
 
 firebase.initializeApp(config);
@@ -143,4 +144,17 @@ exports.uploadImage = (req, res) => {
   });
 
   busboy.end(req.rawBody);
+};
+
+exports.addUserDetails = (req, res) => {
+  let userDetails = reduceUserDetails();
+  db.doc(`/users/${req.user.handle}`)
+    .update(userDetails)
+    .then(() => {
+      return res.json({ message: "Details added successfully" });
+    })
+    .catch((err) => {
+      console.error(err);
+      return status(500).json({ error: err.code });
+    });
 };
