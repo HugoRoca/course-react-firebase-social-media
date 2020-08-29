@@ -7,6 +7,7 @@ const {
   addUserDetails,
   getAuthenticateUser,
   getScream,
+  commentOnScream
 } = require("./handlers/users");
 const FBAuth = require("./utils/fbAuth");
 const app = require("express")();
@@ -15,6 +16,7 @@ const app = require("express")();
 app.get("/screams", getAllScreams);
 app.post("/scream", FBAuth, postOneScream);
 app.get("/scream/:screamId", getScream);
+app.post('/scream/:screamId/comment', FBAuth, commentOnScream)
 
 // Users
 app.post("/signup", signup);
