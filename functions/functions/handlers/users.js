@@ -221,7 +221,7 @@ exports.commentOnScream = (req, res) => {
   const newComment = {
     body: req.body.body,
     createdAt: new Date().toISOString(),
-    screamID: req.params.screamId,
+    screamId: req.params.screamId,
     userHandle: req.user.handle,
     userImage: req.user.imageUrl,
   };
