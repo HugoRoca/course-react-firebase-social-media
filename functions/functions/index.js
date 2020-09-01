@@ -35,3 +35,5 @@ app.post("/user", FBAuth, addUserDetails);
 app.get("/user", FBAuth, getAuthenticateUser);
 
 exports.api = functions.https.onRequest(app);
+
+exports.createNotificationOnLike = functions.region('')
