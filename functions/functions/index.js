@@ -18,7 +18,7 @@ const {
 const FBAuth = require("./utils/fbAuth");
 const app = require("express")();
 const { db } = require("./utils/admin");
-
+const region = 'us-central'
 // Screams
 app.get("/screams", getAllScreams);
 app.post("/scream", FBAuth, postOneScream);
@@ -35,9 +35,9 @@ app.post("/user/image", FBAuth, uploadImage);
 app.post("/user", FBAuth, addUserDetails);
 app.get("/user", FBAuth, getAuthenticateUser);
 
-exports.api = functions.https.onRequest(app);
+exports.api = functions.region(region).https.onRequest(app);
 
-exports.createNotificationOnLike = functions.firestore
+exports.createNotificationOnLike = functions.region(region).firestore
   .document("likes/{id}")
   .onCreate((snapshot) => {
     db.doc(`/screams/${snapshot.data().screamId}`)
@@ -63,7 +63,7 @@ exports.createNotificationOnLike = functions.firestore
       });
   });
 
-exports.deleteNotificationOnLike = functions.firestore
+exports.deleteNotificationOnLike = functions.region(region).firestore
   .document("likes/{id}")
   .onDelete((snapshot) => {
     db.doc(`/notifications/${snapshot.id}`)
@@ -77,7 +77,7 @@ exports.deleteNotificationOnLike = functions.firestore
       });
   });
 
-exports.createNotificationOnComment = functions.firestore
+exports.createNotificationOnComment = functions.region(region).firestore
   .document("comments/{id}")
   .onCreate((snapshot) => {
     db.doc(`/screams/${snapshot.data().screamId}`)
