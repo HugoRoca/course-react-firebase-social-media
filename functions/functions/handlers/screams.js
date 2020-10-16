@@ -91,7 +91,7 @@ exports.likeScreams = (req, res) => {
   screamDocument
     .get()
     .then((doc) => {
-      if (!doc.exists) {
+      if (doc.exists) {
         screamData = doc.data();
         screamData.screamId = doc.id;
         return likeDocument.get();
@@ -135,7 +135,7 @@ exports.unlikeScreams = (req, res) => {
   screamDocument
     .get()
     .then((doc) => {
-      if (!doc.exists) {
+      if (doc.exists) {
         screamData = doc.data();
         screamData.screamId = doc.id;
         return likeDocument.get();
