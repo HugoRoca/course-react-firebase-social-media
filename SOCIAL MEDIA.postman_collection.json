@@ -1,0 +1,391 @@
+{
+	"info": {
+		"_postman_id": "52c80509-161c-4b08-bff4-8b3c18d521ec",
+		"name": "SOCIAL MEDIA",
+		"description": "Project with functions firebase in nodejs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Sign Up",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "03380b61-13c3-466f-ba86-1e581396b28e",
+						"exec": [
+							"var json = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"TOKEN\", json.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"newnewnew@email.com\",\r\n    \"password\": \"123456\",\r\n    \"confirmPassword\": \"123456\",\r\n    \"handle\": \"newnewnew\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/signup",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b8d7a7e4-cb8c-4361-8fe6-a354e8c0cb3a",
+						"exec": [
+							"var json = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"TOKEN\", json.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"email\": \"new@email.com\",\r\n\t\"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/login",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/user",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/api/user/hroca",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"user",
+						"hroca"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add User Details",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"bio\": \"newnewnewnew\",\r\n    \"website\": \"www.patitasconsentidas.com\",\r\n    \"location\": \"Lima - Perú\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/user",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Image User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/hugor/Desktop/icono.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{URL}}/api/user/image",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"user",
+						"image"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Scream",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"body\": \"test in postman\",\r\n\t\"userHandle\": \"hrock\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/scream",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"scream"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Screams",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/screams",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"screams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Scream",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/scream/ShgPNi7W4KX1CBWEHA7f",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"scream",
+						"ShgPNi7W4KX1CBWEHA7f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Like Scream",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/scream/ShgPNi7W4KX1CBWEHA7f/like",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"scream",
+						"ShgPNi7W4KX1CBWEHA7f",
+						"like"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unlike Scream",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{TOKEN}}"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/scream/ShgPNi7W4KX1CBWEHA7f/unlike",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"scream",
+						"ShgPNi7W4KX1CBWEHA7f",
+						"unlike"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Mark Read Notifications",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    \"hRxQL56llIpVSwOL1wqS\",\r\n    \"roDwi5JS1HY8PvqCGXRx\"\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/notifications",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"notifications"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "3543500d-c2ca-48f2-8e09-83ae39bab87c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "58c87be4-e92e-4437-b518-49f4bf4a7923",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
