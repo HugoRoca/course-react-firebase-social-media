@@ -146,7 +146,7 @@ exports.uploadImage = (req, res) => {
 };
 
 exports.addUserDetails = (req, res) => {
-  let userDetails = reduceUserDetails();
+  let userDetails = reduceUserDetails(req.body);
   db.doc(`/users/${req.user.handle}`)
     .update(userDetails)
     .then(() => {
