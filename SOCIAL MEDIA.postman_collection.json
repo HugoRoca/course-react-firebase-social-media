@@ -66,7 +66,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\t\"email\": \"new@email.com\",\r\n\t\"password\": \"123456\"\r\n}",
+					"raw": "{\r\n\t\"email\": \"hroca@email.com\",\r\n\t\"password\": \"123456\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -122,6 +122,26 @@
 					],
 					"path": [
 						"api",
+						"user",
+						"hroca"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User By Handle",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/api//user/hroca",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"",
 						"user",
 						"hroca"
 					]
@@ -231,7 +251,32 @@
 			"response": []
 		},
 		{
-			"name": "Get Screams",
+			"name": "Delete Scream",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/scream/M9Owa2lzLLIkwCgR0nDd",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"scream",
+						"M9Owa2lzLLIkwCgR0nDd"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Screams",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -359,6 +404,41 @@
 					"path": [
 						"api",
 						"notifications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Comment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"body\": \"new comment from postman\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/scream/ShgPNi7W4KX1CBWEHA7f/comment",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"scream",
+						"ShgPNi7W4KX1CBWEHA7f",
+						"comment"
 					]
 				}
 			},
