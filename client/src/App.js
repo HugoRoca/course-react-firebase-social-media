@@ -5,7 +5,7 @@ import login from "./pages/login";
 import signup from "./pages/signup";
 import "./App.css";
 import Navbar from "./components/Navbar";
-import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+import {ThemeProvider as MuiThemeProvider} from "@material-ui/core/styles";
 import CreateMuiTheme from "@material-ui/core/styles/createMuiTheme";
 
 const theme = CreateMuiTheme({
@@ -22,6 +22,9 @@ const theme = CreateMuiTheme({
       dark: "#b22a00",
       contrastText: "#fff",
     },
+    typography: {
+      useNextVariants: true
+    }
   },
 });
 
