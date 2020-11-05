@@ -47,7 +47,7 @@ class signup extends Component {
         console.log(response.data);
         localStorage.setItem("FBIdToken", `Bearer ${response.data.token}`)
         this.setState({ loading: false });
-        this.props.history.push("/");
+        window.location.href = "/";
       })
       .catch((error) => {
         console.log(error);

@@ -43,7 +43,7 @@ class login extends Component {
         console.log(response.data);
         localStorage.setItem("FBIdToken", `Bearer ${response.data.token}`)
         this.setState({ loading: false });
-        this.props.history.push("/");
+        window.location.href = "/";
       })
       .catch((error) => {
         this.setState({ errors: error.response.data, loading: false });
