@@ -1,32 +1,30 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import "./App.css";
 import home from "./pages/home";
 import login from "./pages/login";
 import signup from "./pages/signup";
-import "./App.css";
 import Navbar from "./components/Navbar";
-import {ThemeProvider as MuiThemeProvider} from "@material-ui/core/styles";
+import AuthRoute from "./util/AuthRoute";
+import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import CreateMuiTheme from "@material-ui/core/styles/createMuiTheme";
+import themeFile from "./util/theme";
+import jwtDecode from "jwt-decode";
 
-const theme = CreateMuiTheme({
-  palette: {
-    primary: {
-      light: "#33c9dc",
-      main: "#00bcd4",
-      dark: "#008394",
-      contrastText: "#fff",
-    },
-    secondary: {
-      light: "#ff6333",
-      main: "#ff3d99",
-      dark: "#b22a00",
-      contrastText: "#fff",
-    },
-    typography: {
-      useNextVariants: true
-    }
-  },
-});
+const theme = CreateMuiTheme(themeFile);
+const token = localStorage.FBIdToken;
+let authenticated;
+
+if (token) {
+  const decoded = jwtDecode(token);
+
+  if (decoded.exp * 1000 < Date.now()) {
+    window.location.href = "/login";
+    authenticated = false;
+  } else {
+    authenticated = true;
+  }
+}
 
 function App() {
   return (
@@ -37,8 +35,18 @@ function App() {
           <div className="container">
             <Switch>
               <Route exact path="/" component={home} />
-              <Route exact path="/login" component={login} />
-              <Route exact path="/signup" component={signup} />
+              <AuthRoute
+                exact
+                path="/login"
+                component={login}
+                authenticated={authenticated}
+              />
+              <AuthRoute
+                exact
+                path="/signup"
+                component={signup}
+                authenticated={authenticated}
+              />
             </Switch>
           </div>
         </Router>
@@ -46,6 +54,5 @@ function App() {
     </MuiThemeProvider>
   );
 }
-
 
 export default App;
