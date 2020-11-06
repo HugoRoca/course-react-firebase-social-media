@@ -1,15 +1,21 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
+// Pages
 import home from "./pages/home";
 import login from "./pages/login";
 import signup from "./pages/signup";
+// Components
 import Navbar from "./components/Navbar";
 import AuthRoute from "./util/AuthRoute";
+// Theme
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import CreateMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import themeFile from "./util/theme";
 import jwtDecode from "jwt-decode";
+// Redux
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 const theme = CreateMuiTheme(themeFile);
 const token = localStorage.FBIdToken;
@@ -29,7 +35,7 @@ if (token) {
 function App() {
   return (
     <MuiThemeProvider theme={theme}>
-      <div className="App">
+      <Provider store={store}>
         <Router>
           <Navbar />
           <div className="container">
@@ -50,7 +56,7 @@ function App() {
             </Switch>
           </div>
         </Router>
-      </div>
+      </Provider>
     </MuiThemeProvider>
   );
 }
