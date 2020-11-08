@@ -27,11 +27,19 @@ class login extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.UI.errors) {
-      this.setState({ errors: nextProps.UI.errors });
+  static getDerivedStateFromProps(props, state) {
+    if (props.UI.errors) {
+      return { errors: props.UI.errors };
     }
+    return null;
   }
+
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.UI.errors) {
+  //     this.setState({ errors: nextProps.UI.errors });
+  //   }
+  //   return null
+  // }
 
   handleSubmit = (event) => {
     event.preventDefault();
