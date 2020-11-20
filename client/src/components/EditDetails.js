@@ -19,6 +19,9 @@ import EditIcon from "@material-ui/icons/Edit";
 
 const styles = (theme) => ({
   ...theme.spreadThis,
+  button: {
+    float: 'right'
+  }
 });
 
 class EditDetails extends Component {
@@ -27,6 +30,14 @@ class EditDetails extends Component {
     website: "",
     location: "",
     open: false,
+  };
+
+  mapUserDetailsState = (credentials) => {
+    this.setState({
+      bio: credentials.bio ? credentials.bio : "",
+      website: credentials.website ? credentials.website : "",
+      location: credentials.location ? credentials.location : "",
+    });
   };
 
   componentDidMount() {
@@ -43,13 +54,21 @@ class EditDetails extends Component {
     this.setState({ open: false });
   };
 
-  mapUserDetailsState = (credentials) => {
+  handleChange = (event) => {
     this.setState({
-      bio: credentials.bio ? credentials.bio : "",
-      website: credentials.website ? credentials.website : "",
-      location: credentials.location ? credentials.location : "",
+      [event.target.name]: event.target.value,
     });
   };
+
+  handleSubmit = () => {
+    const userDetails = { 
+      bio: this.state.bio,
+      website: this.state.website,
+      location: this.state.location,
+    }
+    this.props.editUserDetails(userDetails)
+    this.handleClose();
+  }
 
   render() {
     const { classes } = this.props;
@@ -78,11 +97,39 @@ class EditDetails extends Component {
                 placeholder="A short bio about yourself"
                 className={classes.textField}
                 value={this.state.bio}
-                onChange={this.onChange}
+                onChange={this.handleChange}
+                fullWidth
+              />
+               <TextField
+                name="website"
+                type="text"
+                label="Website"
+                placeholder="Your personas/professional website"
+                className={classes.textField}
+                value={this.state.website}
+                onChange={this.handleChange}
+                fullWidth
+              />
+               <TextField
+                name="location"
+                type="text"
+                label="Location"
+                placeholder="location"
+                className={classes.textField}
+                value={this.state.location}
+                onChange={this.handleChange}
                 fullWidth
               />
             </form>
           </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              Close
+            </Button>
+            <Button onClick={this.handleSubmit} color="primary">
+              Save
+            </Button>
+          </DialogActions>
         </Dialog>
       </Fragment>
     );

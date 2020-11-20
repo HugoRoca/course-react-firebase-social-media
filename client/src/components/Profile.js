@@ -98,6 +98,7 @@ class Profile extends Component {
                   </a>
                 </Fragment>
               )}
+              <hr />
               <CalendarToday color="primary" />{" "}
               <span>Joined {dayjs(createdAt).format("MMMM YYYY")}</span>
             </div>
