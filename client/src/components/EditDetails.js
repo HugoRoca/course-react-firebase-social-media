@@ -16,12 +16,13 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 // Icons
 import EditIcon from "@material-ui/icons/Edit";
+import MyButton from "../util/MyButton";
 
 const styles = (theme) => ({
   ...theme.spreadThis,
   button: {
-    float: 'right'
-  }
+    float: "right",
+  },
 });
 
 class EditDetails extends Component {
@@ -61,24 +62,26 @@ class EditDetails extends Component {
   };
 
   handleSubmit = () => {
-    const userDetails = { 
+    const userDetails = {
       bio: this.state.bio,
       website: this.state.website,
       location: this.state.location,
-    }
-    this.props.editUserDetails(userDetails)
+    };
+    this.props.editUserDetails(userDetails);
     this.handleClose();
-  }
+  };
 
   render() {
     const { classes } = this.props;
     return (
       <Fragment>
-        <Tooltip title="Edit details" placement="top">
-          <IconButton onClick={this.handleOpen} className={classes.button}>
-            <EditIcon color="primary" />
-          </IconButton>
-        </Tooltip>
+        <MyButton
+          tip="Edit Details"
+          onClick={this.handleOpen}
+          btnClassName={classes.button}
+        >
+          <EditIcon color="primary" />
+        </MyButton>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
@@ -100,7 +103,7 @@ class EditDetails extends Component {
                 onChange={this.handleChange}
                 fullWidth
               />
-               <TextField
+              <TextField
                 name="website"
                 type="text"
                 label="Website"
@@ -110,7 +113,7 @@ class EditDetails extends Component {
                 onChange={this.handleChange}
                 fullWidth
               />
-               <TextField
+              <TextField
                 name="location"
                 type="text"
                 label="Location"
