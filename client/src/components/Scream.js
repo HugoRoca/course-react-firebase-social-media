@@ -44,12 +44,12 @@ class Scream extends Component {
   };
 
   likeScream = () => {
-    this.props.likeScream(this.props.scream.screamId)
-  }
+    this.props.likeScream(this.props.scream.screamId);
+  };
 
   unLikeScream = () => {
-    this.props.unLikeScream(this.props.scream.screamId)
-  }
+    this.props.unLikeScream(this.props.scream.screamId);
+  };
 
   render() {
     dayjs.extend(relativeTime);
@@ -66,27 +66,29 @@ class Scream extends Component {
         commentCount,
       },
       user: {
-        authenticated
-      }
+        authenticated,
+        credentials: { handle },
+      },
     } = this.props;
 
     const likeButton = !authenticated ? (
       <MyButton tip="Like">
         <Link to="/login">
-          <FavoriteBorder color="primary"/>
+          <FavoriteBorder color="primary" />
         </Link>
       </MyButton>
-    ): (
-      this.likedScream() ? (
-        <MyButton tip="Undo like" onClick={this.unLikeScream}>
-          <FavoriteIcon color="primary" />
-        </MyButton>
-      ): (
-        <MyButton tip="Like" onClick={this.likeScream}>
-          <FavoriteBorder color="primary" />
-        </MyButton>
-      )
-    )
+    ) : this.likedScream() ? (
+      <MyButton tip="Undo like" onClick={this.unLikeScream}>
+        <FavoriteIcon color="primary" />
+      </MyButton>
+    ) : (
+      <MyButton tip="Like" onClick={this.likeScream}>
+        <FavoriteBorder color="primary" />
+      </MyButton>
+    );
+
+    const deleteButton =
+      authenticated && userHandle == handle ? <DeleteScream screamId={screamId} /> : null;
 
     return (
       <Card className={classes.card}>
@@ -104,11 +106,12 @@ class Scream extends Component {
           >
             {userHandle}
           </Typography>
+          {deleteButton}
           <Typography variant="body2" color="textSecondary">
             {dayjs(createdAt).fromNow()}
           </Typography>
           <Typography variant="body1">{body}</Typography>
-          { likeButton }
+          {likeButton}
           <span>{likeCount} Likes</span>
           <MyButton tip="comments">
             <ChatIcon color="primary" />
