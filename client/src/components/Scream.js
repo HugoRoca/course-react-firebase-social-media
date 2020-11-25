@@ -6,6 +6,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { likeScream, unLikeScream } from "../redux/actions/dataActions";
+import DeleteScream from './DeleteScream'
 // MUI stuff
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -19,6 +20,7 @@ import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 
 const styles = {
   card: {
+    position: "relative",
     display: "flex",
     marginBottom: 20,
   },
@@ -88,7 +90,7 @@ class Scream extends Component {
     );
 
     const deleteButton =
-      authenticated && userHandle == handle ? <DeleteScream screamId={screamId} /> : null;
+      authenticated && userHandle === handle ? <DeleteScream screamId={screamId} /> : null;
 
     return (
       <Card className={classes.card}>
