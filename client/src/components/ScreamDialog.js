@@ -18,7 +18,26 @@ import UnfoldMore from "@material-ui/icons/UnfoldMore";
 import { connect } from "react-redux";
 import { getScream } from "../redux/actions/dataActions";
 
-const styles = {};
+const styles = (theme) => ({
+  ...theme.spreadThis,
+  invisibleSeparator: {
+    border: "none",
+    margin: 4,
+  },
+  profileImage: {
+    maxWidth: 200,
+    height: 200,
+    borderRadius: "50%",
+    objectFit: "cover",
+  },
+  dialogContent: {
+    padding: 20,
+  },
+  closeButton: {
+    position: "absolute",
+    left: "90%",
+  },
+});
 
 class ScreamDialog extends Component {
   state = {
@@ -49,16 +68,60 @@ class ScreamDialog extends Component {
       UI: { loading },
     } = this.props;
 
+    const dialogMarkup = loading ? (
+      <CircularProgress size={200} />
+    ) : (
+      <Grid container spacing={16}>
+        <Grid item sm={5}>
+          <img src={userImage} alt="Profile" className={classes.profileImage} />
+        </Grid>
+        <Grid item sm={7}>
+          <Typography
+            component={Link}
+            color="primary"
+            variant="h5"
+            to={`/users/${userHandle}`}
+          >
+            @{userHandle}
+          </Typography>
+          <hr className={classes.invisibleSeparator} />
+          <Typography variant="body2" color="textSecondary">
+            {dayjs(createdAt).format("h:mm a, MMMM DD YYYY")}
+          </Typography>
+          <hr className={classes.invisibleSeparator} />
+          <Typography variant="body1">{body}</Typography>
+        </Grid>
+      </Grid>
+    );
+
     return (
       <Fragment>
-        <MyButton onClick={this.handleOpen} tip="Expand scream" tipClassName={classes.expendButton}>
-          <UnfoldMore color="primary"/>
+        <MyButton
+          onClick={this.handleOpen}
+          tip="Expand scream"
+          tipClassName={classes.expendButton}
+        >
+          <UnfoldMore color="primary" />
         </MyButton>
-        <Dialog>
-
+        <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          fullWidth
+          maxWidth="sm"
+        >
+          <MyButton
+            onClick={this.handleClose}
+            tip="Close"
+            tipClassName={classes.closeButton}
+          >
+            <CloseIcon />
+          </MyButton>
+          <DialogContent className={classes.dialogContent}>
+            {dialogMarkup}
+          </DialogContent>
         </Dialog>
       </Fragment>
-    )
+    );
   }
 }
 
