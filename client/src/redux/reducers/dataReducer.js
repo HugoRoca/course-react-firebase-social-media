@@ -5,7 +5,7 @@ import {
   LOADING_DATA,
   DELETE_SCREAM,
   POST_SCREAM,
-  SET_SCREAM
+  SET_SCREAM,
 } from "../types";
 
 const initialState = {
@@ -38,6 +38,9 @@ export default function (state = initialState, action) {
         (scream) => scream.screamId === action.payload.screamId
       );
       state.screams[index] = action.payload;
+      if (state.scream.screamId === action.payload.screamId) {
+        state.scream = action.payload;
+      }
       return {
         ...state,
       };
