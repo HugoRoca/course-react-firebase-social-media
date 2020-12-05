@@ -18,7 +18,8 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import { SET_AUTHENTICATED } from "./redux/types";
 import { logoutUser, getUserData } from "./redux/actions/userActions";
-import axios from 'axios'
+import axios from "axios";
+import user from "./pages/user";
 
 const theme = CreateMuiTheme(themeFile);
 const token = localStorage.FBIdToken;
@@ -31,8 +32,8 @@ if (token) {
     window.location.href = "/login";
   } else {
     store.dispatch({ type: SET_AUTHENTICATED });
-    axios.defaults.headers.common['Authorization'] = token
-    store.dispatch(getUserData())
+    axios.defaults.headers.common["Authorization"] = token;
+    store.dispatch(getUserData());
   }
 }
 
@@ -45,16 +46,9 @@ function App() {
           <div className="container">
             <Switch>
               <Route exact path="/" component={home} />
-              <AuthRoute
-                exact
-                path="/login"
-                component={login}
-              />
-              <AuthRoute
-                exact
-                path="/signup"
-                component={signup}
-              />
+              <AuthRoute exact path="/login" component={login} />
+              <AuthRoute exact path="/signup" component={signup} />
+              <Route exact path="/users/:handle" component={user} />
             </Switch>
           </div>
         </Router>
