@@ -20,6 +20,9 @@ const {
 const FBAuth = require("./utils/fbAuth");
 const app = require("express")();
 const { db } = require("./utils/admin");
+const cors = require("cors");
+
+app.use(cors());
 
 // Screams
 app.get("/screams", getAllScreams);
@@ -144,7 +147,10 @@ exports.onScreamDelete = functions.firestore
         data.forEach((doc) => {
           batch.delete(db.doc(`/likes/${doc.id}`));
         });
-        return db.collection("notifications").where("screamId", "==", screamId).get();
+        return db
+          .collection("notifications")
+          .where("screamId", "==", screamId)
+          .get();
       })
       .then((data) => {
         data.forEach((doc) => {

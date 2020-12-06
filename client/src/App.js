@@ -24,6 +24,9 @@ import user from "./pages/user";
 const theme = CreateMuiTheme(themeFile);
 const token = localStorage.FBIdToken;
 
+axios.defaults.baseURL =
+  "https://us-central1-hr-socialmedia.cloudfunctions.net/api";
+
 if (token) {
   const decoded = jwtDecode(token);
 
@@ -49,7 +52,11 @@ function App() {
               <AuthRoute exact path="/login" component={login} />
               <AuthRoute exact path="/signup" component={signup} />
               <Route exact path="/users/:handle" component={user} />
-              <Route exact path="/users/:handle/scream/:screamId" component={user}/>
+              <Route
+                exact
+                path="/users/:handle/scream/:screamId"
+                component={user}
+              />
             </Switch>
           </div>
         </Router>
