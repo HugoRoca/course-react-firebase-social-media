@@ -19,6 +19,7 @@ import LinkIcon from "@material-ui/icons/Link";
 import EditIcon from "@material-ui/icons/Edit";
 import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
 import MyButton from "../../util/MyButton";
+import ProfileSkeleton from '../../util/ProfileSkeleton'
 
 const styles = (theme) => ({
   ...theme.spreadThis,
@@ -135,7 +136,7 @@ class Profile extends Component {
         </Paper>
       )
     ) : (
-      <p>loading...</p>
+      <ProfileSkeleton/>
     );
 
     return profileMarkup;
